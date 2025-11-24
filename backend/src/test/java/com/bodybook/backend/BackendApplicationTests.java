@@ -1,10 +1,10 @@
-package bqd.api.bodybook;
+package com.bodybook.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BodybookApplicationTests {
+class BackendApplicationTests {
 
 	@Test
 	void contextLoads() {

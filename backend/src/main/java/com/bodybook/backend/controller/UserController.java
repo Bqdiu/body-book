@@ -1,4 +1,4 @@
-package bqd.api.bodybook.controller;
+package com.bodybook.backend.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
     @GetMapping("/hello")
-    public String hello(){
-        return "Hello world";
+    public Message hello() {
+        return new Message("Hello");
     }
+    record Message(String message) {}
 }
