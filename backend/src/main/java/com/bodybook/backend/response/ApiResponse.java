@@ -2,24 +2,16 @@ package com.bodybook.backend.response;
 
 import java.time.LocalDateTime;
 
-public class ApiResponse<T> {
-    private int status;
-    private String message;
-    private T data;
-    private LocalDateTime timestamp;
-
-    public ApiResponse(int status, String message, T data) {
-        this.status = status;
-        this.message = message;
-        this.data = data;
-        this.timestamp = LocalDateTime.now();
-    }
-
+public record ApiResponse<T>(
+        boolean success,
+        String message,
+        T data,
+        LocalDateTime timestamp) {
     public static <T> ApiResponse<T> success(String message, T data) {
-        return new ApiResponse<>(200, message, data);
+        return new ApiResponse<>(true, message, data, LocalDateTime.now());
     }
 
-    public static ApiResponse<?> error(int status, String message) {
-        return new ApiResponse<>(status, message, null);
+    public static <T> ApiResponse<T> error(String message, T data) {
+        return new ApiResponse<>(false, message, data, LocalDateTime.now());
     }
 }

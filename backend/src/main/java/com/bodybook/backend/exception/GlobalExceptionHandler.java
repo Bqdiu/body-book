@@ -1,22 +1,24 @@
 package com.bodybook.backend.exception;
 
-import org.springframework.http.HttpStatus;
+import com.bodybook.backend.response.ApiResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<?> handleBadRequest(BadRequestException ex) {
+    public ResponseEntity<ApiResponse<?>> handleBadRequest(BadRequestException ex) {
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponse.error(400, ex.getMessage()));
+                .badRequest()
+                .body(ApiResponse.error(ex.getMessage(), null));
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse<?>> handleOtherExceptions(Exception ex) {
+        return ResponseEntity
+                .status(500)
+                .body(ApiResponse.error("Internal Server Error: " + ex.getMessage(), null));
+    }
 }
